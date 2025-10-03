@@ -1,0 +1,154 @@
+# Configuration Specification - [YOUR PROJECT NAME]
+# Version: 1.0.0
+# Last Updated: [DATE]
+#
+# IMPORTANT: This is the SINGLE SOURCE OF TRUTH for all configuration values.
+# NO MAGIC NUMBERS in code - all values must be defined here.
+
+# ============================================================================
+# PROJECT METADATA
+# ============================================================================
+project:
+  name: "YourProjectName"
+  version: "1.0.0"
+  environment: "development"  # development, staging, production
+  description: "Your project description"
+
+# ============================================================================
+# CONTEXT DASHBOARD CONFIGURATION
+# ============================================================================
+# Configuration for AI context management dashboard
+# These values control when warnings/alerts are triggered
+context_dashboard:
+  # Total token budget for AI context (Claude Sonnet 4.5 = 200,000)
+  total_tokens: 200000
+  
+  # Health status thresholds (percentage of total tokens used)
+  health_warning_threshold: 70.0    # Warn when usage exceeds this %
+  health_critical_threshold: 85.0   # Critical when usage exceeds this %
+  
+  # Accuracy score thresholds (0-100 scale)
+  accuracy_warning_threshold: 85    # Warn when accuracy below this
+  accuracy_critical_threshold: 75   # Critical when accuracy below this
+  
+  # Efficiency score thresholds (0-1.0 scale)
+  efficiency_warning_threshold: 0.7   # Warn when efficiency below this
+  efficiency_critical_threshold: 0.5  # Critical when efficiency below this
+  
+  # Display settings
+  eviction_preview_count: 5           # Number of items to show in eviction queue
+  max_recommendations: 5              # Maximum recommendations to display
+  recommendation_priority_threshold: 7 # Only show recommendations with priority >= this
+
+# ============================================================================
+# APPLICATION CONFIGURATION
+# ============================================================================
+# Add your application-specific configuration here
+
+# Example: API Configuration
+api:
+  base_url: "https://api.example.com"
+  version: "v1"
+  timeout_seconds: 30
+  max_retries: 3
+  retry_delay_seconds: 1
+
+# Example: Database Configuration
+database:
+  host: "localhost"
+  port: 5432
+  name: "your_database"
+  pool_size: 10
+  max_overflow: 20
+  pool_timeout_seconds: 30
+
+# Example: Authentication Configuration
+auth:
+  jwt_secret_key: "${JWT_SECRET_KEY}"  # Load from environment variable
+  jwt_algorithm: "HS256"
+  access_token_expire_minutes: 30
+  refresh_token_expire_days: 7
+
+# Example: Cache Configuration
+cache:
+  enabled: true
+  ttl_seconds: 3600
+  max_size_mb: 100
+
+# Example: Logging Configuration
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file_path: "logs/app.log"
+  max_file_size_mb: 10
+  backup_count: 5
+
+# Example: Rate Limiting Configuration
+rate_limiting:
+  enabled: true
+  requests_per_minute: 60
+  burst_size: 10
+
+# Example: Feature Flags
+features:
+  enable_new_feature: false
+  enable_beta_features: false
+  enable_analytics: true
+
+# ============================================================================
+# ENVIRONMENT-SPECIFIC OVERRIDES
+# ============================================================================
+# These values override the defaults based on environment
+
+development:
+  api:
+    base_url: "http://localhost:8000"
+  database:
+    host: "localhost"
+  logging:
+    level: "DEBUG"
+
+staging:
+  api:
+    base_url: "https://staging-api.example.com"
+  database:
+    host: "staging-db.example.com"
+  logging:
+    level: "INFO"
+
+production:
+  api:
+    base_url: "https://api.example.com"
+  database:
+    host: "prod-db.example.com"
+  logging:
+    level: "WARNING"
+  features:
+    enable_analytics: true
+
+# ============================================================================
+# CUSTOMIZATION INSTRUCTIONS
+# ============================================================================
+# 
+# To use this template:
+# 1. Replace [placeholders] with your project values
+# 2. Add your application-specific configuration sections
+# 3. Remove example sections that don't apply
+# 4. Keep context_dashboard section (required for docFlow)
+# 5. Use environment variables for secrets (${VAR_NAME})
+# 6. Document all values with comments
+# 
+# Loading configuration in code:
+# 
+# Python example:
+#   import yaml
+#   with open('config_specification.yaml') as f:
+#       config = yaml.safe_load(f)
+#   
+# JavaScript example:
+#   const yaml = require('js-yaml');
+#   const fs = require('fs');
+#   const config = yaml.load(fs.readFileSync('config_specification.yaml', 'utf8'));
+# 
+# Remember: NO MAGIC NUMBERS in code - all values must be here!
+

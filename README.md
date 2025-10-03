@@ -1,4 +1,4 @@
-# docFlow Portable Package v2.0
+# docFlow
 
 **AI Context Engineering Framework + Context Management**
 
@@ -6,7 +6,6 @@
 
 **Version**: 2.0.0  
 **Date**: 2025-10-03  
-**Origin**: TradePulse v4.0 Backend
 
 ---
 
@@ -66,7 +65,7 @@ context_dashboard:
 ### **Step 3: Customize Development Standards**
 
 Edit `docs/development_standards.md`:
-- Replace TradePulse-specific patterns with your patterns
+- Replace specific patterns with your patterns
 - Add your tech stack (React, Django, etc.)
 - Define your coding conventions
 

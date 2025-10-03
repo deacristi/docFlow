@@ -2,7 +2,7 @@
 
 ## 🎯 What is docFlow?
 
-**docFlow** is TradePulse's AI Context Engineering Framework - a systematic approach to human-AI collaboration that ensures high-quality, production-ready code through structured documentation, constraints, and templates.
+**docFlow** is an AI Context Engineering Framework - a systematic approach to human-AI collaboration that ensures high-quality, production-ready code through structured documentation, constraints, and templates.
 
 **Core Philosophy**: Manage AI context quality through Research → Plan → Implement workflow with hard constraints and executable patterns.
 
@@ -324,7 +324,7 @@ def endpoint(db: Session = Depends(get_db_session)):  # ✅ Correct
     pass
 
 # Tool pattern
-class MyTool(TradePulseLangchainTool):  # ✅ Correct
+class MyTool(BaseProjectTool):  # ✅ Correct
     name: str = "my_tool"
 ```
 

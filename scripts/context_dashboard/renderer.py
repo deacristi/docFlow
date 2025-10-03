@@ -89,7 +89,7 @@ class DashboardRenderer:
     
     def _render_header(self) -> str:
         """Render dashboard header."""
-        header = "TradePulse AI Context Dashboard v1.0"
+        header = "MyProject AI Context Dashboard v1.0"
         border = "═" * self.width
         
         return f"╔{border}╗\n║{header.center(self.width)}║\n╚{border}╝"

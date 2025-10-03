@@ -189,7 +189,7 @@ CREATE TABLE new_table (
 - [ ] Comprehensive error handling
 - [ ] Production-grade code (no TODOs, mock data)
 - [ ] Proper imports (absolute paths)
-- [ ] Template usage (TradePulseLangchainTool pattern)
+- [ ] Template usage (project-specific tool pattern)
 
 ---
 

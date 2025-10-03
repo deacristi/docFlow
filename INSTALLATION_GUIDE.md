@@ -81,7 +81,7 @@ python scripts/context_dashboard.py
 **Expected output**:
 ```
 ╔════════════════════════════════════════════════════════════════╗
-║         TradePulse AI Context Dashboard v1.0                   ║
+║         MyProject AI Context Dashboard v1.0                    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 📊 Context Health: ✅ HEALTHY (25.0% used)

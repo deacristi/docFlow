@@ -1,18 +1,20 @@
 """
-AI Context Dashboard for TradePulse v4.0
+AI Context Dashboard for MyProject
 
-Provides real-time monitoring and optimization for AI context management.
-Helps maintain high accuracy and efficiency throughout development sessions.
+A comprehensive monitoring and optimization tool for AI development context management.
+Provides real-time insights into context health, token usage, and optimization opportunities.
 
-Usage:
-    python scripts/context_dashboard.py
+Features:
+- Context health monitoring
+- Token usage tracking
+- Optimization recommendations
 
-Author: TradePulse Development Team
-Version: 1.0.0
+Author: MyProject Development Team
+License: MIT
 """
 
 __version__ = "1.0.0"
-__author__ = "TradePulse Development Team"
+__author__ = "MyProject Development Team"
 
 from .models import (
     ContextState,

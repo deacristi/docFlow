@@ -117,7 +117,7 @@ class RecommendationEngine:
             recommendations.append(Recommendation(
                 priority=8,
                 category="warning",
-                action="Review TradePulseLangchainTool pattern",
+                action="Review project-specific tool patterns",
                 reason=f"Pattern consistency at {metrics.pattern_consistency}/100",
                 impact="Ensure consistent code quality",
             ))

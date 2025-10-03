@@ -1,11 +1,12 @@
-# docFlow
+# docFlow Portable Package v3.0
 
-**AI Context Engineering Framework + Context Management**
+**AI Context Engineering Framework + Context Management + Living Code Context**
 
-**Purpose**: Copy this entire folder to any new project to instantly enable docFlow workflow and context management.
+**Purpose**: Copy this entire folder to any new project to instantly enable docFlow workflow, context management, and living code context generation.
 
-**Version**: 2.0.0  
-**Date**: 2025-10-03  
+**Version**: 3.0.0
+**Date**: 2025-10-03
+**Origin**: Extracted from production implementation (TradePulse v4.0)
 
 ---
 
@@ -13,23 +14,25 @@
 
 This portable package contains everything you need to implement the docFlow framework in any project:
 
-### **1. Core Framework**
-- ✅ docFlow philosophy and workflow
-- ✅ 6-phase development process
-- ✅ Template library
-- ✅ Compliance checker
-- ✅ Context management dashboard
+### **1. Core Framework (6 Layers)**
+- ✅ Layer 1: Philosophy (Research → Plan → Implement)
+- ✅ Layer 2: Process (6-phase workflow)
+- ✅ Layer 3: Templates (Structured documentation)
+- ✅ Layer 4: Validation (Compliance checker)
+- ✅ Layer 5: Context Management (Dashboard + Best Practices)
+- ✅ Layer 6: Living Code Context (Auto-generated current state) ← NEW in v3.0
 
 ### **2. Documentation**
 - ✅ Quick start guide
 - ✅ Workflow guide
 - ✅ Development standards template
-- ✅ AI context loader
+- ✅ AI context loader (MASTER_CONTEXT_LOADER.md)
+- ✅ Living Code Context guide
 
 ### **3. Tools**
-- ✅ Context dashboard (Python)
-- ✅ Compliance checker (Python)
-- ✅ Configuration template
+- ✅ Context dashboard (Python) - Monitor context health
+- ✅ Living context generator (Python) - Auto-generate code state ← NEW
+- ✅ Configuration template (YAML)
 
 ### **4. Templates**
 - ✅ Implementation plan
@@ -56,7 +59,7 @@ Edit `config_specification.yaml`:
 project:
   name: "YourProjectName"
   version: "1.0.0"
-  
+
 # Keep context_dashboard settings (or adjust thresholds)
 context_dashboard:
   total_tokens: 200000  # Adjust based on your AI model
@@ -65,25 +68,46 @@ context_dashboard:
 ### **Step 3: Customize Development Standards**
 
 Edit `docs/development_standards.md`:
-- Replace specific patterns with your patterns
-- Add your tech stack (React, Django, etc.)
+- Add your tech stack (React, Django, FastAPI, etc.)
 - Define your coding conventions
+- Add your forbidden/required patterns
+- Customize for your project needs
 
-### **Step 4: Load Context in AI**
+### **Step 4: Generate Living Code Context** ← NEW in v3.0
+
+```bash
+# Generate current code state
+python scripts/generate_living_context.py --all
+
+# This creates docs/ai_context/living_code/ with:
+# - DATABASE_SCHEMA_CURRENT.md (if you have database models)
+# - DATABASE_STATE_CURRENT.md (actual data samples)
+# - API_ENDPOINTS_CURRENT.md (from your routes)
+# - SERVICES_INVENTORY.md (from your services)
+# - AGENTS_AND_TOOLS_CURRENT.md (if applicable)
+# - ARCHITECTURE_MAP.md (system overview)
+```
+
+### **Step 5: Load Context in AI**
 
 Start any AI conversation with:
 ```
 Load context from @docs/ai_context/MASTER_CONTEXT_LOADER.md
 ```
 
-### **Step 5: Start Using**
+AI will automatically load all 6 layers including Living Code Context!
+
+### **Step 6: Start Using**
 
 ```bash
-# Check context health
+# Check context health and loaded knowledge
 python scripts/context_dashboard.py
 
 # Follow workflow for any task
 # Phase 1: Research → Phase 2: Document → ... → Phase 6: Validate
+
+# Regenerate living context before major changes
+python scripts/generate_living_context.py --all
 ```
 
 ---

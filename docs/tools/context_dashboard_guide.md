@@ -8,7 +8,7 @@
 
 ## 📊 Overview
 
-The AI Context Dashboard provides real-time visibility into AI context health, usage patterns, and optimization opportunities. It helps maintain high accuracy and efficiency throughout your development sessions.
+The AI Context Dashboard provides real-time visibility into AI context health, usage patterns, and optimization opportunities. It helps maintain high accuracy and efficiency throughout TradePulse development sessions.
 
 **Key Benefits**:
 - ✅ Proactive context management (refresh before degradation)
@@ -109,7 +109,7 @@ Available: 155,804 tokens
 - **Documentation Freshness**: How recently standards/docs were loaded
   - <80: Refresh development_standards.md
 - **Pattern Consistency**: How well AI follows established patterns
-  - <85: Review project-specific tool patterns
+  - <85: Review TradePulseLangchainTool pattern
 - **Knowledge Retention**: How much information is preserved
   - <80: Consider starting new thread
 - **Retrieval Efficiency**: How efficiently AI retrieves information

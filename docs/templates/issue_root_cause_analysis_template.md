@@ -81,7 +81,7 @@ sequenceDiagram
     Note over A,C: Show the failure sequence
 ```
 
-### **Project Architecture Impact**
+### **TradePulse Architecture Impact**
 
 **Affected Layers**:
 1. **[Layer 1]**: [How this layer is affected]
@@ -330,7 +330,7 @@ flowchart TD
 
 ## 📚 **References**
 
-- [Project Development Standards](../development_standards.md)
+- [TradePulse Development Standards](../development_standards.md)
 - [Implementation Plan](../implementation_plans/[related_plan].md)
 - [Related Documentation]
 - [External Resources]

@@ -1,8 +1,8 @@
-# docFlow Installation & Setup Guide
+# docFlow v3.0 Installation & Setup Guide
 
-**Get docFlow running in your project in 10 minutes**
+**Get docFlow v3.0 with Living Code Context running in your project in 15 minutes**
 
-Version: 2.0.0  
+Version: 3.0.0
 Last Updated: 2025-10-03
 
 ---
@@ -10,13 +10,14 @@ Last Updated: 2025-10-03
 ## 📋 Prerequisites
 
 ### **Required**
-- Python 3.8+ (for context dashboard)
+- Python 3.8+ (for context dashboard and living context generator)
 - Git (for version control)
 - Text editor or IDE
 
 ### **Optional**
 - AI assistant (Claude, GPT-4, etc.)
 - YAML support in your editor
+- Database (PostgreSQL, MySQL, etc.) for Living Code Context database features
 
 ---
 
@@ -40,13 +41,18 @@ Copy-Item -Path "path\to\docflow_portable\*" -Destination "." -Recurse -Force
 your-project/
 ├── docs/
 │   ├── ai_context/
+│   │   ├── living_code/              ← NEW in v3.0
+│   │   ├── MASTER_CONTEXT_LOADER.md
+│   │   └── LOAD_CONTEXT.md
 │   ├── templates/
 │   ├── tools/
 │   ├── docflow_quickstart.md
 │   ├── workflow_guide.md
-│   └── development_standards.md
+│   ├── development_standards.md
+│   └── DOCFLOW_V3_LIVING_CODE_CONTEXT.md  ← NEW
 ├── scripts/
 │   ├── context_dashboard.py
+│   ├── generate_living_context.py    ← NEW in v3.0
 │   └── context_dashboard/
 ├── config_specification.yaml
 └── README.md (docFlow README)
@@ -81,7 +87,7 @@ python scripts/context_dashboard.py
 **Expected output**:
 ```
 ╔════════════════════════════════════════════════════════════════╗
-║         MyProject AI Context Dashboard v1.0                    ║
+║         TradePulse AI Context Dashboard v1.0                   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 📊 Context Health: ✅ HEALTHY (25.0% used)

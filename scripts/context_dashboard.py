@@ -8,7 +8,7 @@ Usage:
     python scripts/context_dashboard.py
     python scripts/context_dashboard.py --current-usage 45000 --messages 20
 
-Author: MyProject Development Team
+Author: TradePulse Development Team
 Version: 1.0.0
 """
 
@@ -65,7 +65,7 @@ def load_config() -> dict:
 def parse_arguments() -> argparse.Namespace:
     """Parse command-line arguments."""
     parser = argparse.ArgumentParser(
-        description="MyProject AI Context Dashboard - Monitor context health and optimization",
+        description="TradePulse AI Context Dashboard - Monitor context health and optimization",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:

@@ -1,466 +1,355 @@
-# Development Standards - [YOUR PROJECT NAME]
+# docFlow v3.1 - Development Standards
 
-**Production-Grade Development Standards**
-
-Version: 1.0.0  
-Last Updated: [DATE]  
-Purpose: Define coding standards, patterns, and best practices
+**Philosophy:** Production-grade quality without over-engineering  
+**Enforcement:** Automated checks + code review
 
 ---
 
-## 🎯 CORE PRINCIPLES
+## Core Principles
 
-### **1. Configuration-First Development**
-
-**Principle**: ALL numeric values, URLs, and settings MUST be in `config_specification.yaml`
-
-**✅ CORRECT**:
-```[language]
-from config import settings
-
-max_retries = settings.api_max_retries
-timeout = settings.api_timeout_seconds
-```
-
-**❌ WRONG**:
-```[language]
-max_retries = 3  # Magic number!
-timeout = 30     # Magic number!
-```
-
-**Why**: Maintainability, flexibility, single source of truth
+1. **Configuration Over Code:** All tunable values in config
+2. **Fail Gracefully:** Degrade features, don't crash
+3. **Async First:** Non-blocking operations by default
+4. **Test What Matters:** Focus on business logic and integrations
+5. **Document Decisions:** ADRs for architectural choices
 
 ---
 
-### **2. Production-Grade Code Only**
+## MANDATORY CONSTRAINTS (Never Violate)
 
-**Requirements**:
-- ✅ No mock data
-- ✅ No TODO comments
-- ✅ No placeholder implementations
-- ✅ No commented-out code
-- ✅ Complete error handling
-- ✅ Proper logging
-- ✅ Type hints/annotations
+### Database Access
 
-**If code isn't production-ready, don't commit it.**
+| Pattern | ❌ FORBIDDEN | ✅ REQUIRED |
+|---------|-------------|-------------|
+| **Async DB** | `SessionLocal()` directly | `async with get_db()` |
+| **FastAPI Routes** | Manual session management | `db: Session = Depends(get_db_session)` |
+| **Scripts** | No cleanup | Context manager with try/finally |
 
----
+### Configuration Management
 
-### **3. Template-Driven Development**
+| Pattern | ❌ FORBIDDEN | ✅ REQUIRED |
+|---------|-------------|-------------|
+| **Magic Numbers** | `timeout = 30` | `timeout = settings.API_TIMEOUT` |
+| **Hardcoded URLs** | `url = "https://..."` | `url = settings.API_BASE_URL` |
+| **Environment Checks** | `if os.getenv("DEBUG")` | `if settings.DEBUG_MODE` |
+| **Thresholds** | `if score > 0.7` | `if score > settings.CONFIDENCE_THRESHOLD` |
 
-**Principle**: Use templates for all plans, reports, and documentation
+### Exception Handling
 
-**Templates Available**:
-- `docs/templates/implementation_plan_template.md`
-- `docs/templates/issue_root_cause_analysis_template.md`
-- `docs/templates/feature_specification_template.md`
-- `docs/templates/implementation_report_template.md`
+| Pattern | ❌ FORBIDDEN | ✅ REQUIRED |
+|---------|-------------|-------------|
+| **Bare Except** | `except:` | `except SpecificException:` |
+| **Silent Failures** | `except: pass` | `except Exception as e: logger.error(...); raise` |
+| **Generic Exceptions** | `raise Exception("error")` | `raise CustomException("error", context={...})` |
 
-**Why**: Consistency, completeness, efficiency
+### Global State
 
----
-
-## 🏗️ PROJECT-SPECIFIC PATTERNS
-
-### **Pattern 1: [Your Pattern Name]**
-
-**When to Use**: [Describe when this pattern applies]
-
-**Template**:
-```[language]
-# Your pattern code template here
-# Include comments explaining each part
-```
-
-**Example**:
-```[language]
-# Real-world example of the pattern
-```
-
-**Why**: [Explain the reasoning behind this pattern]
+| Pattern | ❌ FORBIDDEN | ✅ REQUIRED |
+|---------|-------------|-------------|
+| **Module-level Instances** | `client = APIClient()` | Lazy initialization function |
+| **Mutable Globals** | `_cache = {}` | Dependency injection or app.state |
+| **Global Locks** | `_lock = Lock()` | Instance-level locks |
 
 ---
 
-### **Pattern 2: [Your Pattern Name]**
+## IMPLEMENTATION PATTERNS
 
-**When to Use**: [Describe when this pattern applies]
+### 1. Dependency Injection
 
-**Template**:
-```[language]
-# Your pattern code template here
-```
+**Problem:** Global singletons create testing nightmares and race conditions
 
-**Example**:
-```[language]
-# Real-world example
-```
+**Solution:** Dependency injection container
 
-**Why**: [Explain the reasoning]
+```python
+from typing import Annotated
+from fastapi import Depends
 
----
-
-### **Pattern 3: [Your Pattern Name]**
-
-**When to Use**: [Describe when this pattern applies]
-
-**Template**:
-```[language]
-# Your pattern code template here
-```
-
-**Example**:
-```[language]
-# Real-world example
-```
-
-**Why**: [Explain the reasoning]
-
----
-
-## 🚫 FORBIDDEN PATTERNS
-
-### **Anti-Pattern 1: [What NOT to do]**
-
-**❌ WRONG**:
-```[language]
-# Bad example showing what NOT to do
-```
-
-**✅ CORRECT**:
-```[language]
-# Good example showing the right way
-```
-
-**Why Forbidden**: [Explain why this is bad]
-
----
-
-### **Anti-Pattern 2: [What NOT to do]**
-
-**❌ WRONG**:
-```[language]
-# Bad example
-```
-
-**✅ CORRECT**:
-```[language]
-# Good example
-```
-
-**Why Forbidden**: [Explain why this is bad]
-
----
-
-### **Anti-Pattern 3: [What NOT to do]**
-
-**❌ WRONG**:
-```[language]
-# Bad example
-```
-
-**✅ CORRECT**:
-```[language]
-# Good example
-```
-
-**Why Forbidden**: [Explain why this is bad]
-
----
-
-## 📝 NAMING CONVENTIONS
-
-### **Files**
-- Format: `[your_convention]`
-- Example: `user_service.py`, `UserService.ts`, etc.
-
-### **Classes**
-- Format: `[YourConvention]`
-- Example: `UserService`, `DataProcessor`, etc.
-
-### **Functions/Methods**
-- Format: `[your_convention]`
-- Example: `get_user_data()`, `processPayment()`, etc.
-
-### **Variables**
-- Format: `[your_convention]`
-- Example: `user_id`, `totalAmount`, etc.
-
-### **Constants**
-- Format: `[YOUR_CONVENTION]`
-- Example: `MAX_RETRIES`, `API_BASE_URL`, etc.
-
----
-
-## 🧪 TESTING STANDARDS
-
-### **Test Coverage**
-- **Minimum**: 80% code coverage
-- **Target**: 90%+ code coverage
-- **Critical Paths**: 100% coverage
-
-### **Test Structure**
-```[language]
-# Test template
-def test_[feature]_[scenario]_[expected_result]():
-    # Arrange
-    [setup test data]
+class ServiceContainer:
+    """Centralized dependency injection"""
     
-    # Act
-    [execute the code being tested]
+    def __init__(self):
+        self._client: Optional[APIClient] = None
+        self._cache: Optional[CacheManager] = None
     
-    # Assert
-    [verify the results]
+    async def get_client(self) -> APIClient:
+        """Get or create client (lazy singleton)"""
+        if self._client is None:
+            self._client = APIClient()
+            await self._client.connect()
+        return self._client
+
+# Global container (single instance)
+_container = ServiceContainer()
+
+async def get_container() -> ServiceContainer:
+    return _container
+
+Container = Annotated[ServiceContainer, Depends(get_container)]
+
+# Usage in routes
+@router.get("/data/{id}")
+async def get_data(id: str, container: Container):
+    client = await container.get_client()
+    return await client.fetch(id)
 ```
 
-### **Test Categories**
-1. **Unit Tests**: Test individual functions/methods
-2. **Integration Tests**: Test component interactions
-3. **E2E Tests**: Test complete user flows
+### 2. Circuit Breakers for External APIs
 
----
+**Problem:** Repeated calls to failing services waste resources
 
-## 📚 DOCUMENTATION STANDARDS
+**Solution:** Circuit breaker pattern with automatic fallback
 
-### **Code Comments**
-- **When**: Complex logic, non-obvious decisions
-- **Format**: Clear, concise explanations
-- **Avoid**: Obvious comments, commented-out code
+```python
+from enum import Enum
+from datetime import datetime, timedelta
 
-**✅ GOOD**:
-```[language]
-# Use exponential backoff to avoid overwhelming the API during retries
-retry_delay = base_delay * (2 ** attempt)
+class CircuitState(Enum):
+    CLOSED = "closed"      # Normal operation
+    OPEN = "open"          # Failing - reject requests
+    HALF_OPEN = "half_open"  # Testing recovery
+
+class CircuitBreaker:
+    def __init__(
+        self,
+        name: str,
+        failure_threshold: int = 5,
+        timeout_seconds: int = 60
+    ):
+        self.name = name
+        self.failure_threshold = failure_threshold
+        self.timeout = timedelta(seconds=timeout_seconds)
+        self.state = CircuitState.CLOSED
+        self.failure_count = 0
+    
+    async def call(self, func, *args, **kwargs):
+        if self.state == CircuitState.OPEN:
+            if datetime.now() - self.last_failure > self.timeout:
+                self.state = CircuitState.HALF_OPEN
+            else:
+                raise CircuitBreakerOpen(f"Circuit '{self.name}' is OPEN")
+        
+        try:
+            result = await func(*args, **kwargs)
+            self._on_success()
+            return result
+        except Exception as e:
+            self._on_failure()
+            raise
 ```
 
-**❌ BAD**:
-```[language]
-# Set x to 5
-x = 5
-```
+### 3. Structured Logging with Context
 
-### **Docstrings/JSDoc**
-- **Required**: All public functions, classes, modules
-- **Format**: [Your preferred format - Google, NumPy, JSDoc, etc.]
+**Problem:** Difficult to trace requests across async operations
 
-**Example**:
-```[language]
-"""
-Brief description of what this function does.
+**Solution:** Context-aware structured logging
 
-Args:
-    param1: Description of param1
-    param2: Description of param2
+```python
+import logging
+from contextvars import ContextVar
 
-Returns:
-    Description of return value
+request_id_var: ContextVar[str] = ContextVar('request_id', default=None)
 
-Raises:
-    ExceptionType: When this exception is raised
-"""
-```
-
----
-
-## 🔒 SECURITY STANDARDS
-
-### **Secrets Management**
-- ✅ Use environment variables
-- ✅ Use secret management services
-- ❌ NEVER commit secrets to Git
-- ❌ NEVER hardcode API keys
-
-### **Input Validation**
-- ✅ Validate all user input
-- ✅ Sanitize data before database operations
-- ✅ Use parameterized queries
-
-### **Authentication/Authorization**
-- [Your auth pattern]
-- [Your permission checking pattern]
-
----
-
-## 🎨 CODE STYLE
-
-### **Formatting**
-- **Tool**: [e.g., Black, Prettier, ESLint, etc.]
-- **Config**: [Location of config file]
-- **Run**: `[command to format code]`
-
-### **Linting**
-- **Tool**: [e.g., pylint, ESLint, etc.]
-- **Config**: [Location of config file]
-- **Run**: `[command to lint code]`
-
-### **Type Checking** (if applicable)
-- **Tool**: [e.g., mypy, TypeScript, etc.]
-- **Config**: [Location of config file]
-- **Run**: `[command to type check]`
-
----
-
-## 🔄 VERSION CONTROL
-
-### **Commit Messages**
-**Format**:
-```
-type(scope): brief description
-
-Detailed explanation (if needed)
-
-- Bullet points for changes
-- More details
-```
-
-**Types**:
-- `feat`: New feature
-- `fix`: Bug fix
-- `docs`: Documentation changes
-- `refactor`: Code refactoring
-- `test`: Test changes
-- `chore`: Build/tooling changes
-
-**Example**:
-```
-feat(auth): Add OAuth2 authentication
-
-Implement OAuth2 flow for user authentication with Google and GitHub providers.
-
-- Add OAuth2 client configuration
-- Implement callback handlers
-- Add user session management
-```
-
-### **Branch Naming**
-- Format: `[type]/[brief-description]`
-- Examples: `feat/oauth-login`, `fix/user-validation`, `docs/api-guide`
-
-### **Pull Requests**
-- **Title**: Clear, descriptive
-- **Description**: What, why, how
-- **Tests**: All tests passing
-- **Review**: At least one approval
-
----
-
-## 📊 PERFORMANCE STANDARDS
-
-### **Response Times**
-- API endpoints: [target, e.g., <200ms]
-- Database queries: [target, e.g., <100ms]
-- Page load: [target, e.g., <2s]
-
-### **Optimization**
-- ✅ Use caching where appropriate
-- ✅ Optimize database queries
-- ✅ Lazy load when possible
-- ✅ Minimize bundle size (frontend)
-
----
-
-## 🔧 ERROR HANDLING
-
-### **Pattern**:
-```[language]
-try:
-    # Attempt operation
-    result = risky_operation()
-except SpecificException as e:
-    # Handle specific exception
-    logger.error(f"Operation failed: {e}")
-    # Recover or re-raise
-except Exception as e:
-    # Handle unexpected exceptions
-    logger.exception("Unexpected error")
-    # Re-raise or return error response
-finally:
-    # Cleanup (if needed)
-    cleanup_resources()
-```
-
-### **Logging**:
-- **Levels**: DEBUG, INFO, WARNING, ERROR, CRITICAL
-- **Format**: [Your log format]
-- **Location**: [Where logs are stored]
-
----
-
-## 📋 CODE REVIEW CHECKLIST
-
-Before submitting code for review:
-
-- [ ] Follows all patterns in this document
-- [ ] No magic numbers (all in config)
-- [ ] Production-grade (no TODOs, mocks, placeholders)
-- [ ] Tests written and passing
-- [ ] Documentation updated
-- [ ] Type hints/annotations added
-- [ ] Error handling implemented
-- [ ] Logging added
-- [ ] Security considerations addressed
-- [ ] Performance acceptable
-- [ ] Code formatted and linted
-
----
-
-## 🎓 LEARNING RESOURCES
-
-### **Internal**
-- This document (development_standards.md)
-- `docs/workflow_guide.md`
-- `docs/docflow_quickstart.md`
-
-### **External**
-- [Framework docs]: [URL]
-- [Language docs]: [URL]
-- [Best practices guide]: [URL]
-
----
-
-## 🔄 MAINTENANCE
-
-**Update this document when**:
-- New patterns emerge
-- Anti-patterns discovered
-- Technology stack changes
-- Team conventions evolve
-
-**Review Schedule**: Monthly
-
----
-
-## ✅ COMPLIANCE
-
-All code MUST comply with these standards before merging.
-
-**Validation**:
-```bash
-# Run compliance checker
-python scripts/docflow_compliance_checker.py
-
-# Should output: PASS
+class StructuredFormatter(logging.Formatter):
+    def format(self, record):
+        log_data = {
+            'timestamp': datetime.utcnow().isoformat(),
+            'level': record.levelname,
+            'message': record.getMessage(),
+        }
+        if request_id := request_id_var.get():
+            log_data['request_id'] = request_id
+        return json.dumps(log_data)
 ```
 
 ---
 
-## 📝 CUSTOMIZATION INSTRUCTIONS
+## AUTOMATED ENFORCEMENT
 
-**To use this template**:
+### Pre-Commit Hooks
 
-1. Replace all `[placeholders]` with your project specifics
-2. Add your tech stack patterns (React, Django, etc.)
-3. Define your naming conventions
-4. Add your testing framework details
-5. Specify your code style tools
-6. Remove sections that don't apply
-7. Add project-specific sections
+```powershell
+# PowerShell pre-commit hook
+Write-Host "Running code quality checks..."
 
-**Remember**: These standards ensure consistency and quality. Follow them rigorously!
+# Check for bare except
+$bareExcepts = Select-String -Path "**/*.py" -Pattern "except:" | 
+    Where-Object { $_ -notmatch "except Exception" }
+if ($bareExcepts) {
+    Write-Host "❌ BLOCKED: Bare except statements found"
+    exit 1
+}
+
+# Run tests
+pytest tests/ -q --tb=no
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "❌ BLOCKED: Tests failing"
+    exit 1
+}
+
+Write-Host "✅ All checks passed"
+```
+
+### Anti-Pattern Checker Script
+
+```python
+# scripts/check_anti_patterns.py
+import re
+from pathlib import Path
+
+def check_bare_excepts():
+    """Check for bare except: statements"""
+    issues = []
+    for file in Path("app").rglob("*.py"):
+        with open(file) as f:
+            for i, line in enumerate(f, 1):
+                if re.match(r'^\s*except:\s*(#.*)?$', line):
+                    issues.append(f"{file}:{i}: Bare except statement")
+    return issues
+
+def check_magic_numbers():
+    """Check for hardcoded numbers"""
+    issues = []
+    allowed = {0, 1, 100, 1000}
+    
+    for file in Path("app").rglob("*.py"):
+        if "test_" in file.name:
+            continue
+        with open(file) as f:
+            for i, line in enumerate(f, 1):
+                if "settings." in line:
+                    continue
+                for match in re.finditer(r'\b(\d+)\b', line):
+                    num = int(match.group(1))
+                    if num not in allowed and num > 1:
+                        issues.append(f"{file}:{i}: Magic number {num}")
+    return issues[:10]
+
+if __name__ == "__main__":
+    all_issues = check_bare_excepts() + check_magic_numbers()
+    if all_issues:
+        print("❌ Anti-patterns detected:")
+        for issue in all_issues:
+            print(f"  - {issue}")
+        exit(1)
+    print("✅ No anti-patterns detected")
+```
 
 ---
 
-**Version**: 1.0.0  
-**Status**: [Draft / Active]  
-**Maintained By**: [Team/Person]
+## CODE REVIEW CHECKLIST
 
+### For Reviewer
+
+**Architecture (P0 - Must Check):**
+- [ ] Uses dependency injection, not global instances
+- [ ] Async operations non-blocking
+- [ ] Proper exception hierarchy (no bare except)
+- [ ] Configuration-driven (no magic numbers)
+
+**Quality (P1 - Should Check):**
+- [ ] Has unit tests for business logic
+- [ ] Logging includes context
+- [ ] Error messages are actionable
+- [ ] Database sessions properly managed
+
+**Production (P2 - Nice to Have):**
+- [ ] Circuit breakers on external APIs
+- [ ] Graceful degradation if services unavailable
+- [ ] Performance considerations documented
+
+### For Author
+
+**Before Creating PR:**
+- [ ] Pre-commit hooks pass locally
+- [ ] All tests pass
+- [ ] Coverage >70% for new code
+- [ ] No magic numbers (use config)
+- [ ] Docstrings for public functions
+
+---
+
+## TESTING STRATEGY
+
+### Test Pyramid
+
+```
+     /\
+    /  \  E2E Tests (5%)
+   /----\  - Critical user flows
+  /      \
+ /--------\ Integration Tests (25%)
+/----------\ - API endpoints
+/===========\ Unit Tests (70%)
+              - Business logic
+```
+
+### What to Test
+
+**Unit Tests (70%):**
+- ✅ Business logic and calculations
+- ✅ Edge cases and error handling
+- ✅ Retry logic and fallbacks
+
+**Integration Tests (25%):**
+- ✅ API endpoints end-to-end
+- ✅ Database operations
+- ✅ Service interactions
+
+**E2E Tests (5%):**
+- ✅ Critical user flows only
+
+**What NOT to Test:**
+- ❌ Third-party library internals
+- ❌ Framework behavior
+- ❌ Simple getters/setters
+
+---
+
+## PRAGMATIC BALANCE
+
+### Don't Over-Engineer
+
+**❌ Too Much:**
+- Writing tests for every line (aim for 70-80%, not 100%)
+- Abstract factories for simple objects
+- Complex inheritance hierarchies
+- Perfect code before shipping
+
+**✅ Right Amount:**
+- Test business logic and integrations
+- Simple dependency injection
+- Composition over inheritance
+- Ship, measure, improve
+
+### When to Refactor
+
+**Immediate (Red Alert):**
+- Bare except: statements in production code
+- Global mutable state in request handlers
+- Unhandled exceptions crashing service
+- Resource leaks (unclosed connections)
+
+**Soon (Yellow Alert):**
+- Code duplication (DRY violated >3 times)
+- Functions >50 lines
+- Cyclomatic complexity >10
+- No tests for critical path
+
+**Eventually (Green Alert):**
+- Minor style inconsistencies
+- Suboptimal performance (if not bottleneck)
+- Missing docstrings (non-public functions)
+
+---
+
+## SUMMARY
+
+**Key Components:**
+1. ✅ Dependency Injection pattern
+2. ✅ Circuit Breaker implementation
+3. ✅ Structured Logging with context
+4. ✅ Automated enforcement (pre-commit, CI/CD)
+5. ✅ Anti-pattern checker scripts
+6. ✅ Code review checklist
+7. ✅ Testing strategy (70/25/5 pyramid)
+8. ✅ Pragmatic balance guidance

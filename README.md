@@ -1,432 +1,311 @@
-# docFlow Portable Package v3.0
+# docFlow v3.1
 
-**AI Context Engineering Framework + Context Management + Living Code Context**
+> AI Context Engineering Framework for Human-AI Collaboration
 
-**Purpose**: Copy this entire folder to any new project to instantly enable docFlow workflow, context management, and living code context generation.
+[![Version](https://img.shields.io/badge/version-3.1.0-blue.svg)](https://github.com/deacristi/docflow)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-**Version**: 3.0.0
-**Date**: 2025-10-03
-**Origin**: Extracted from production implementation (TradePulse v4.0)
+## 🎯 What is docFlow?
 
----
+**docFlow** is an AI Context Engineering Framework - a systematic approach to human-AI collaboration that ensures high-quality, production-ready code through structured documentation, context management, and template-driven development.
 
-## 📦 What's Included
+**Core Philosophy**: Manage AI context quality through **Research → Plan → Implement** workflow with proactive context monitoring, automated enforcement, and safe recovery protocols.
 
-This portable package contains everything you need to implement the docFlow framework in any project:
+## 🆕 What's New in v3.1
 
-### **1. Core Framework (6 Layers)**
-- ✅ Layer 1: Philosophy (Research → Plan → Implement)
-- ✅ Layer 2: Process (6-phase workflow)
-- ✅ Layer 3: Templates (Structured documentation)
-- ✅ Layer 4: Validation (Compliance checker)
-- ✅ Layer 5: Context Management (Dashboard + Best Practices)
-- ✅ Layer 6: Living Code Context (Auto-generated current state) ← NEW in v3.0
+| Feature | v3.0 | v3.1 |
+|---------|------|------|
+| Steering Rules | Basic | IDE-native integration (Kiro, Cursor, etc.) |
+| Context Monitoring | Manual triggers | Automatic with configurable intervals |
+| Checkpoint System | Concept | Full implementation with git integration |
+| Freshness Checker | Concept | Working script with exit codes |
+| Platform Support | Generic | Cross-platform (Windows/Mac/Linux) |
 
-### **2. Documentation**
-- ✅ Quick start guide
-- ✅ Workflow guide
-- ✅ Development standards template
-- ✅ AI context loader (MASTER_CONTEXT_LOADER.md)
-- ✅ Living Code Context guide
+## 🏗️ Architecture
 
-### **3. Tools**
-- ✅ Context dashboard (Python) - Monitor context health
-- ✅ Living context generator (Python) - Auto-generate code state ← NEW
-- ✅ Configuration template (YAML)
+```
+docFlow Framework v3.1
+├── Layer 1: Philosophy (Research → Plan → Implement)
+├── Layer 2: Process (6-phase workflow with gates)
+├── Layer 3: Templates (Structured documentation)
+├── Layer 4: Validation (Compliance checker)
+├── Layer 5: Context Management (Dashboard + Steering Rules)
+└── Layer 6: Recovery (Protocols + Checkpoint System)
+```
 
-### **4. Templates**
-- ✅ Implementation plan
-- ✅ Issue root cause analysis
-- ✅ Feature specification
-- ✅ Implementation report
+## 📁 Repository Structure
 
----
+```
+docflow/
+├── README.md                    # This file
+├── LICENSE                      # MIT License
+├── CHANGELOG.md                 # Version history
+├── .gitignore                   # Git ignore patterns
+├── docs/
+│   ├── quickstart.md           # Quick start guide
+│   ├── workflow_guide.md       # 6-phase workflow details
+│   └── development_standards.md # Code standards and patterns
+├── templates/
+│   ├── implementation_plan.md  # Feature implementation planning
+│   ├── issue_analysis.md       # Bug/issue root cause analysis
+│   ├── feature_documentation.md # User-facing feature docs
+│   ├── phase_gate_checklist.md # Phase gate reference
+│   ├── recovery_protocols.md   # Recovery procedures
+│   ├── service_template.py     # Python service pattern
+│   └── tool_template.py        # AI tool pattern
+├── scripts/
+│   ├── checkpoint.py           # Development checkpoint system
+│   └── check_freshness.py      # Living Code freshness checker
+├── steering/
+│   ├── context-monitoring.md   # AI context health rules
+│   └── phase-gates.md          # Phase workflow enforcement
+└── examples/
+    └── living_code/            # Example Living Code structure
+        ├── README.md           # Living Code explanation
+        ├── MASTER_CONTEXT_LOADER.md  # AI entry point template
+        └── patterns/
+            ├── approved_patterns.md   # Patterns to use
+            └── forbidden_patterns.md  # Anti-patterns to avoid
+```
 
-## 🚀 Quick Start (5 Minutes)
+## 🚀 Quick Start
 
-### **Step 1: Copy to Your Project**
+### 1. Copy to Your Project
 
 ```bash
-# Copy entire docflow folder to your project root
-cp -r docflow/* /path/to/your/project/
+# Clone docFlow
+git clone https://github.com/deacristi/docflow.git
+
+# Copy to your project
+cp -r docflow/templates your-project/docs/templates
+cp -r docflow/scripts your-project/scripts/docflow
+cp -r docflow/steering your-project/.kiro/steering  # For Kiro IDE
+# OR
+cp -r docflow/steering your-project/.cursor/rules   # For Cursor
 ```
 
-### **Step 2: Customize Configuration**
+## 🔧 Adapting docFlow to Your Project
 
-Edit `config_specification.yaml`:
-```yaml
-# Update project-specific settings
-project:
-  name: "YourProjectName"
-  version: "1.0.0"
+docFlow is designed to be project-agnostic. Follow these steps to customize it for any repository:
 
-# Keep context_dashboard settings (or adjust thresholds)
-context_dashboard:
-  total_tokens: 200000  # Adjust based on your AI model
+### Step 1: Customize Steering Rules
+
+Edit `steering/context-monitoring.md`:
+```markdown
+## ⚠️ Critical Constraints (Customize for Your Project)
+
+### Database Access
+# Replace with YOUR project's database patterns
+async with get_db() as session:  # Your pattern here
+
+### Configuration
+# Replace with YOUR project's config access
+timeout = settings.API_TIMEOUT  # Your settings object
 ```
 
-### **Step 3: Customize Development Standards**
+### Step 2: Customize Scripts
 
-Edit `docs/development_standards.md`:
-- Add your tech stack (React, Django, FastAPI, etc.)
-- Define your coding conventions
-- Add your forbidden/required patterns
-- Customize for your project needs
-
-### **Step 4: Generate Living Code Context** ← NEW in v3.0
-
-```bash
-# Generate current code state
-python scripts/generate_living_context.py --all
-
-# This creates docs/ai_context/living_code/ with:
-# - DATABASE_SCHEMA_CURRENT.md (if you have database models)
-# - DATABASE_STATE_CURRENT.md (actual data samples)
-# - API_ENDPOINTS_CURRENT.md (from your routes)
-# - SERVICES_INVENTORY.md (from your services)
-# - AGENTS_AND_TOOLS_CURRENT.md (if applicable)
-# - ARCHITECTURE_MAP.md (system overview)
+Edit `scripts/checkpoint.py`:
+```python
+# Update BACKUP_DIRS to match YOUR project structure
+BACKUP_DIRS = [
+    "docs/ai_context/living_code",  # Your context docs
+    ".kiro/steering",                # Your steering rules
+    "src/",                          # Your source code (optional)
+]
 ```
 
-### **Step 5: Load Context in AI**
-
-Start any AI conversation with:
-```
-Load context from @docs/ai_context/MASTER_CONTEXT_LOADER.md
-```
-
-AI will automatically load all 6 layers including Living Code Context!
-
-### **Step 6: Start Using**
-
-```bash
-# Check context health and loaded knowledge
-python scripts/context_dashboard.py
-
-# Follow workflow for any task
-# Phase 1: Research → Phase 2: Document → ... → Phase 6: Validate
-
-# Regenerate living context before major changes
-python scripts/generate_living_context.py --all
+Edit `scripts/check_freshness.py`:
+```python
+# Update paths to match YOUR project
+DOCS_DIR = Path("docs/ai_context/living_code")  # Your docs location
+SOURCE_DIRS = [
+    Path("src"),   # Your source directories
+    Path("app"),
+    Path("lib"),
+]
 ```
 
----
+### Step 3: Create Living Code Context
 
-## 📁 Folder Structure
-
+Create your project's Living Code structure:
 ```
 your-project/
-├── docs/
-│   ├── ai_context/
-│   │   ├── MASTER_CONTEXT_LOADER.md      # AI entry point
-│   │   └── LOAD_CONTEXT.md               # Project context
-│   ├── templates/
-│   │   ├── implementation_plan_template.md
-│   │   ├── issue_root_cause_analysis_template.md
-│   │   ├── feature_specification_template.md
-│   │   └── implementation_report_template.md
-│   ├── analysis/                         # Store analysis docs here
-│   ├── implementation_plans/             # Store plans here
-│   ├── implementation_reports/           # Store reports here
-│   ├── tools/
-│   │   └── context_dashboard_guide.md    # Dashboard usage
-│   ├── docflow_quickstart.md             # Framework intro
-│   ├── workflow_guide.md                 # 6-phase process
-│   └── development_standards.md          # Your coding standards
-├── scripts/
-│   ├── context_dashboard.py              # Main dashboard CLI
-│   ├── context_dashboard/                # Dashboard modules
-│   │   ├── __init__.py
-│   │   ├── models.py
-│   │   ├── analyzer.py
-│   │   ├── metrics.py
-│   │   ├── recommender.py
-│   │   └── renderer.py
-│   └── docflow_compliance_checker.py     # Compliance validator
-└── config_specification.yaml             # All configuration
+└── docs/
+    └── ai_context/
+        └── living_code/
+            ├── MASTER_CONTEXT_LOADER.md  # Copy from examples/
+            ├── architecture/
+            │   └── system_overview.md
+            └── patterns/
+                ├── approved_patterns.md
+                └── forbidden_patterns.md
 ```
 
----
+Customize `MASTER_CONTEXT_LOADER.md` with:
+- Your project's architecture
+- Your forbidden patterns
+- Your current feature status
+- Your development standards
 
-## 🎯 What docFlow Solves
+### Step 4: Update Templates
 
-### **How It Solves Real-World Context Engineering Problems**
+Templates in `templates/` are ready to use. Customize:
+- `implementation_plan.md` - Add your project-specific sections
+- `issue_analysis.md` - Add your project's common issues
+- `service_template.py` - Match your project's code style
 
-1. ✅ **"Shouting at AI"**: Research → Plan → Implement prevents reactive corrections
-2. ✅ **Bad Information**: MASTER_CONTEXT_LOADER ensures accurate context
-3. ✅ **Missing Information**: Templates ensure nothing is missed
-4. ✅ **Too Much Noise**: Dashboard identifies low-value content
-5. ✅ **Context Overload**: Maintains <40% usage (currently 22%)
-6. ✅ **Poor Research**: Structured Phase 1 investigation
-7. ✅ **Vague Plans**: Template-driven specifications
-8. ✅ **Manual Compaction**: Data-driven refresh decisions
-9. ✅ **Code Review Burden**: Review plans, not code
+### Step 5: Configure Your IDE
 
-### **Additional Benefits**
-
-- ✅ Real-time context health monitoring
-- ✅ Automated compliance validation
-- ✅ Template library for consistency
-- ✅ Configuration-first development
-- ✅ Knowledge capture and transfer
-
-### **Works For:**
-
-- ✅ Frontend (React, Vue, Angular, etc.)
-- ✅ Backend (Python, Node.js, Go, etc.)
-- ✅ Data/ML (Jupyter, pipelines, etc.)
-- ✅ Mobile (React Native, Flutter, etc.)
-- ✅ CLI tools
-- ✅ Any programming language
-- ✅ Any framework
-- ✅ Any project size
-
----
-
-## 📊 Expected Impact
-
-### **Time Savings**
-- faster feature implementation
-- fewer code revisions
-
-### **Quality Improvements**
-- accuracy maintained
-- 2-3x longer context lifespan
-- 50-60% fewer redundant retrievals
-
---
-
-## 🛠️ Customization Guide
-
-### **For Backend Projects (Python, Node.js, etc.)**
-
-1. Update `development_standards.md`:
-   - Add your framework patterns (Django, FastAPI, Express, etc.)
-   - Define database patterns
-   - Add API design standards
-
-2. Update `config_specification.yaml`:
-   - Add database config
-   - Add API endpoints
-   - Add service URLs
-
-3. Keep context dashboard as-is (works for any project)
-
-### **For Frontend Projects (React, Vue, Angular, etc.)**
-
-1. Update `development_standards.md`:
-   - Add component patterns
-   - Define state management (Redux, Vuex, etc.)
-   - Add styling conventions (CSS modules, Tailwind, etc.)
-
-2. Update `config_specification.yaml`:
-   - Add API endpoints
-   - Add environment variables
-   - Add build settings
-
-3. Keep context dashboard as-is (works for any project)
-
-### **For Data Projects (ML, Analytics, etc.)**
-
-1. Update `development_standards.md`:
-   - Add data pipeline patterns
-   - Define model training standards
-   - Add experiment tracking conventions
-
-2. Update `config_specification.yaml`:
-   - Add model parameters
-   - Add data sources
-   - Add experiment settings
-
-3. Keep context dashboard as-is (works for any project)
-
----
-
-## 📚 Core Concepts
-
-### **1. Research → Plan → Implement**
-
-```
-Phase 1-2: Research & Document (understand system)
-Phase 3-4: Design & Plan (define changes)
-Phase 5-6: Implement & Validate (execute & verify)
+**Kiro IDE:**
+```bash
+cp -r steering/ your-project/.kiro/steering/
 ```
 
-### **2. Context Management**
-
-```
-Start Session: Check context health
-Before Major Work: Validate context fresh
-Mid-Session: Monitor usage (every 30-40 messages)
-When Mistakes: Check if context stale
+**Cursor:**
+```bash
+cp -r steering/ your-project/.cursor/rules/
 ```
 
-### **3. Template-Driven Development**
-
-```
-Need to implement feature? → Use implementation_plan_template.md
-Need to fix bug? → Use issue_root_cause_analysis_template.md
-Need to document? → Use implementation_report_template.md
+**VS Code + Copilot:**
+```bash
+cat steering/*.md > your-project/.github/copilot-instructions.md
 ```
 
-### **4. Compliance Validation**
+### Step 6: Add to .gitignore
 
+```gitignore
+# docFlow checkpoints
+.docflow_checkpoints/
 ```
-Created plan? → Run compliance checker
-Implemented code? → Run compliance checker
-Before commit? → Run compliance checker
+
+### Customization Checklist
+
+- [ ] Updated `steering/context-monitoring.md` with your patterns
+- [ ] Updated `steering/phase-gates.md` if needed
+- [ ] Configured `scripts/checkpoint.py` backup directories
+- [ ] Configured `scripts/check_freshness.py` paths
+- [ ] Created `docs/ai_context/living_code/` structure
+- [ ] Customized `MASTER_CONTEXT_LOADER.md` for your project
+- [ ] Added `.docflow_checkpoints/` to `.gitignore`
+- [ ] Copied steering rules to IDE config directory
+
+### 2. Load Context at Session Start
+
+Tell your AI assistant:
+```
+Load the docFlow framework from docs/templates/ and follow the 6-phase workflow.
 ```
 
----
+### 3. Use Phase Gates
 
-## 🎓 Learning Path
+Before implementing, ensure you pass through the gates:
+```
+✅ Investigation complete. Proceeding to documentation.
+✅ Documentation complete. Proceeding to solution design.
+✅ Solution design complete. Proceeding to implementation planning.
+✅ Implementation plan complete. Proceeding to code implementation.
+✅ Implementation complete. Proceeding to validation.
+```
 
-### **Day 1: Setup & Basics**
-1. Copy docflow to your project
-2. Customize config_specification.yaml
-3. Customize development_standards.md
-4. Run context dashboard
-5. Read docflow_quickstart.md
-
-### **Day 2: First Feature**
-1. Load MASTER_CONTEXT_LOADER.md in AI
-2. Follow workflow_guide.md for a small feature
-3. Use implementation_plan_template.md
-4. Monitor context with dashboard
-5. Document with implementation_report_template.md
-
-### **Day 3: Optimization**
-1. Review what worked/didn't work
-2. Adjust templates to your needs
-3. Customize compliance checker
-4. Refine development_standards.md
-
-### **Week 2+: Mastery**
-1. docFlow becomes second nature
-2. Context management is automatic
-3. Templates speed up work significantly
-4. Quality and consistency improve
-
----
-
-## 🔧 Dependencies
-
-### **Python Requirements**
+### 4. Create Checkpoints Before Risky Changes
 
 ```bash
-# For context dashboard
-pip install pyyaml  # Configuration loading
-
-# For compliance checker (if using)
-pip install pyyaml
+python scripts/checkpoint.py create pre-refactor "Before major refactoring"
+python scripts/checkpoint.py list
+python scripts/checkpoint.py restore pre-refactor  # If needed
 ```
 
-**That's it!** No heavy dependencies.
+## 📋 The 6-Phase Workflow
 
----
+```mermaid
+flowchart LR
+    P1["Phase 1<br/>🔍 Investigation"]
+    P2["Phase 2<br/>📄 Documentation"]
+    P3["Phase 3<br/>🎨 Solution Design"]
+    P4["Phase 4<br/>📋 Implementation Plan"]
+    P5["Phase 5<br/>💻 Code Implementation"]
+    P6["Phase 6<br/>✅ Validation"]
+    
+    P1 --> P2 --> P3 --> P4 --> P5 --> P6
+    P6 -->|"Issues Found"| P1
+```
 
-## 📖 Documentation Index
+### Fast-Track for Simple Changes
 
-### **Getting Started**
-- `README.md` (this file) - Overview and quick start
-- `docs/docflow_quickstart.md` - Framework introduction
-- `docs/workflow_guide.md` - 6-phase process
+For low-risk changes (< 20 lines, single file):
+```
+✅ Simple change verified. Implementing with validation.
+```
 
-### **Templates**
-- `docs/templates/implementation_plan_template.md`
-- `docs/templates/issue_root_cause_analysis_template.md`
-- `docs/templates/feature_specification_template.md`
-- `docs/templates/implementation_report_template.md`
+## 🛠️ Key Components
 
-### **Tools**
-- `docs/tools/context_dashboard_guide.md` - Dashboard usage
-- `scripts/context_dashboard/README.md` - Dashboard architecture
+### Steering Rules
+AI instructions that enforce docFlow practices automatically. Place in your IDE's rules directory.
 
-### **AI Context**
-- `docs/ai_context/MASTER_CONTEXT_LOADER.md` - AI entry point
-- `docs/ai_context/LOAD_CONTEXT.md` - Project context
+### Templates
+Structured documents for consistent output:
+- **Implementation Plan**: Plan before coding
+- **Issue Analysis**: Understand before fixing
+- **Feature Documentation**: Document for users
 
-### **Standards**
-- `docs/development_standards.md` - Coding standards (customize!)
+### Scripts
+- **checkpoint.py**: Save/restore development state
+- **check_freshness.py**: Detect stale documentation
 
----
+### Recovery Protocols
+Documented procedures for:
+1. Context Degradation Recovery
+2. Bad Implementation Rollback
+3. Breaking Change Recovery
+4. Scope Creep Recovery
+5. Database/Migration Issues
 
-## 🎯 Success Criteria
+## 📊 Benefits
 
-You'll know docFlow is working when:
+| Metric | Without docFlow | With docFlow |
+|--------|-----------------|--------------|
+| Context Lifespan | 30-40 messages | 90-120 messages |
+| Code Revisions | 40-50% | 15-20% |
+| Accuracy | 80-85% | 95%+ |
+| Time Savings | - | 90-180 min/week |
 
-1. ✅ AI follows your standards consistently
-2. ✅ Code revisions decrease significantly
-3. ✅ Context stays healthy (usage <40%)
-4. ✅ Plans are reviewed, not just code
-5. ✅ Knowledge is captured systematically
-6. ✅ New team members onboard faster
-7. ✅ You ship features faster with higher quality
+## 🔧 IDE Integration
 
----
+### Kiro IDE
+Copy steering rules to `.kiro/steering/`
 
-## 🆘 Troubleshooting
+### Cursor
+Copy steering rules to `.cursor/rules/`
 
-### **AI not following standards**
+### VS Code + Copilot
+Add to `.github/copilot-instructions.md`
 
-**Solution**: 
-1. Check context health: `python scripts/context_dashboard.py`
-2. If freshness <80%, reload MASTER_CONTEXT_LOADER.md
-3. Verify development_standards.md is up to date
+### Other IDEs
+Use steering rules as system prompts or AI instructions
 
-### **Context usage too high**
+## 📚 Documentation
 
-**Solution**:
-1. Run dashboard to see breakdown
-2. Remove low-value content (see eviction queue)
-3. Start new thread if usage >70%
+- [Quick Start Guide](docs/quickstart.md)
+- [Workflow Guide](docs/workflow_guide.md)
+- [Development Standards](docs/development_standards.md)
+- [Adaptation Guide](docs/adaptation_guide.md) - **How to adapt docFlow to any project**
+- [Phase Gate Checklist](templates/phase_gate_checklist.md)
+- [Recovery Protocols](templates/recovery_protocols.md)
 
-### **Templates don't fit your project**
+## 🤝 Contributing
 
-**Solution**:
-1. Customize templates in `docs/templates/`
-2. Keep structure, change content
-3. Update compliance checker if needed
-
-### **Dashboard not working**
-
-**Solution**:
-1. Check Python version (3.8+)
-2. Install dependencies: `pip install pyyaml`
-3. Verify config_specification.yaml exists
-
----
-
-## 📞 Support
-
-This is a self-contained package. All documentation is included.
-
-**Key Resources**:
-- `docs/docflow_quickstart.md` - Start here
-- `docs/workflow_guide.md` - Detailed process
-- `docs/tools/context_dashboard_guide.md` - Dashboard help
-
----
+Contributions welcome! Please follow the docFlow workflow when contributing:
+1. Create an issue analysis or feature specification
+2. Follow the 6-phase workflow
+3. Use the provided templates
 
 ## 📄 License
 
-Part of docFlow framework. Use freely in any project.
+MIT License - See [LICENSE](LICENSE) for details.
 
 ---
 
-## 🎉 You're Ready!
-
-**Next Steps**:
-1. Copy this folder to your project
-2. Customize config and standards
-3. Load MASTER_CONTEXT_LOADER.md in AI
-4. Start your first feature with docFlow
-
-**Welcome to efficient, high-quality AI-assisted development!** 🚀
-
----
-
-**Version**: 2.0.0  
-**Last Updated**: 2025-10-03  
-**Status**: ✅ Production-Ready
-
+**Version**: 3.1.0  
+**Last Updated**: December 2025  
+**Author**: [@deacristi](https://github.com/deacristi)
